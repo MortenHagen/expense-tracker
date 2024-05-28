@@ -3,15 +3,17 @@ import React, { useState } from 'react';
 // ExpenseForm component
 const ExpenseForm = ({ onAddExpense }) => {
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState('');
   const [category, setCategory] = useState('housing');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const expense = { title, amount: parseFloat(amount), date, category };
+    const expense = { title, amount: parseFloat(amount), date, category, description };
     onAddExpense(expense);
     setTitle('');
+    setDescription('');
     setAmount('');
     setDate('');
     setCategory('housing');
@@ -26,6 +28,16 @@ const ExpenseForm = ({ onAddExpense }) => {
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="description">Description:</label>
+        <input
+          type="text"
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           required
         />
       </div>
@@ -77,9 +89,11 @@ const ExpenseItem = ({ expense, onDeleteExpense }) => {
   return (
     <div>
       <h3>{expense.title}</h3>
-      <p>Amount: ${expense.amount}</p>
+      <p>Amount: Kr{expense.amount}</p>
       <p>Date: {expense.date}</p>
       <p>Category: {expense.category}</p>
+      <p>Description: {expense.description}</p>
+
       <button onClick={handleDelete}>Delete</button>
     </div>
   );
